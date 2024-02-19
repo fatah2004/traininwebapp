@@ -1,11 +1,16 @@
 // Navbar.js
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
-import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Navbar = () => {
   const { user, userRole, logout } = useAuth();
+  const [showLinks, setShowLinks] = useState(false);
+
+  const handleToggleLinks = () => {
+    setShowLinks(!showLinks);
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -19,16 +24,14 @@ const Navbar = () => {
             <button
               className="navbar-toggler"
               type="button"
-              data-toggle="collapse"
-              data-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
+              onClick={handleToggleLinks}
             >
-              <span className="navbar-toggler-icon"></span>
+              ☰
             </button>
 
-            <div className="collapse navbar-collapse" id="navbarNav">
+            <div
+              className={`navbar-collapse ${showLinks ? 'd-flex' : 'd-none'}`}
+            >
               <ul className="navbar-nav ml-auto">
                 {userRole === 'admin' && (
                   <>
